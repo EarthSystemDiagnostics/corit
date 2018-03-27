@@ -7,12 +7,12 @@
 ##' @param detr TRUE for removing a linear trend, else FALSE
 ##' @return zoo-objects of the time series 
 ##' @examples 
-##' 
+##' time.series <- GenNullHypPair(1000, 0.5, 0.4, sort(runif(100, min=1, max=1000)), sort(runif(100, min=1, max=1000)), FALSE)
 ##' @author
 ##' @export
 
 
-GenNullHypPair <- function(n=max(c(max(index(timser1)),max(index(timser2)))), beta.noise1, beta.noise2, time1, time2, detr)
+GenNullHypPair <- function(n, beta.noise1, beta.noise2, time1, time2, detr)
 {
 	regtimeseries1 <- SimPowerlaw(beta.noise1,n)
 	regtimeseries2 <- SimPowerlaw(beta.noise2,n)
