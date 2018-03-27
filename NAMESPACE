@@ -2,6 +2,7 @@
 
 export(AvgToBin)
 export(ClosestElement)
+export(CorIrregTimser)
 export(CorQuantilesNullHyp)
 export(DirectFiltering)
 export(GenNullHypPair)

@@ -4,8 +4,7 @@
 \alias{GenNullHypPair}
 \title{GenNullHypPair}
 \usage{
-GenNullHypPair(n = max(c(max(index(timser1)), max(index(timser2)))),
-  beta.noise1, beta.noise2, time1, time2, detr)
+GenNullHypPair(n, beta.noise1, beta.noise2, time1, time2, detr)
 }
 \arguments{
 \item{n}{length of the power-law time series which have to be generated}
@@ -23,5 +22,5 @@ zoo-objects of the time series
 generating a pair of subsampled power-law time series
 }
 \examples{
-
+time.series <- GenNullHypPair(1000, 0.5, 0.4, sort(runif(100, min=1, max=1000)), sort(runif(100, min=1, max=1000)), FALSE)
 }
