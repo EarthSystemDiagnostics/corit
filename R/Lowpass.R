@@ -20,7 +20,7 @@ Lowpass <- function(omega.c,
   
   omega.c <- omega.c / sample
   if (omega.c >= 0.5)
-    stop("frequency higher or equal then Nyquist")
+    stop("frequency higher or equal than Nyquist")
   #calculate least square solution for ideal lowpass
   n.side <- (n - 1) / 2
   g.u <- numeric(length = n)

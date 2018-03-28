@@ -8,7 +8,7 @@ CorIrregTimser(timser1, timser2, detr, method = c("InterpolationMethod",
   "DirectFiltering", "IntegrandInterpolationMethod"),
   appliedFilter = c("gauss", "runmean", "lowpass"), fc, tn = seq(from = 10,
   to = max(c(index(timser1), index(timser2))), by = 10), dt,
-  int.method = c("linear", "nearest"), k = 5)
+  int.method = c("linear", "nearest"), k = 5, filt.output)
 }
 \arguments{
 \item{timser1, timser2}{time series (zoo-objects)}
@@ -28,6 +28,8 @@ CorIrregTimser(timser1, timser2, detr, method = c("InterpolationMethod",
 \item{int.method}{kind of interpolation (linear, nearest neighbor) (only used in case of InterpolationMethod)}
 
 \item{k}{scaling factor to define the sharpness of the lowpass}
+
+\item{filt.output}{TRUE for returning correlation ($cor) and filter results ($ft1, $ft2), FALSE for only returning correlation}
 }
 \description{
 estimating the time scale dependent correlation of irregularly sampled time series
@@ -35,5 +37,5 @@ estimating the time scale dependent correlation of irregularly sampled time seri
 \examples{
 timeseries1 <- zoo(rnorm(100), order.by=sort(runif(100,min=1,max=1000)))
 timeseries2 <- zoo(rnorm(100), order.by=sort(runif(100,min=1,max=1000)))
-CorIrregTimser(timeseries1, timeseries2, FALSE, "InterpolationMethod", "gauss", 1/200, NA, 10, "linear", NA)
+CorIrregTimser(timser1=timeseries1, timser2=timeseries2, detr=FALSE, method="InterpolationMethod", appliedFilter="gauss", fc=1/200, tn=NA, dt=10, int.method="linear", k=NA, filt.output=TRUE)
 }

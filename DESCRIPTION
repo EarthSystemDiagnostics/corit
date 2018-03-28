@@ -1,5 +1,5 @@
-Package: afetsdc
-Title: auxiliary functions for estimating time scale dependent correlations
+Package: corit
+Title: time scale dependent correlation of irregular time series
 Version: 0.0.0.9000
 Authors@R: c(person("Maria", "Reschke", email = "mreschke@awi.de", role = c("aut", "cre")), person("Thomas", "Laepple", email = "tlaepple@awi.de", role = c("aut")))
 Description: contains methods for processing irregularly sampled time series to enable the estimation of time scale dependent correlations using standard routines

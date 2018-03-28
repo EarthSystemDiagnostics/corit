@@ -11,28 +11,36 @@
 ##' @param dt regular inter-observation time step of the interpolation (only used in case of InterpolationMethod)
 ##' @param int.method kind of interpolation (linear, nearest neighbor) (only used in case of InterpolationMethod)
 ##' @param k scaling factor to define the sharpness of the lowpass
+##' @param filt.output TRUE for returning correlation ($cor) and filter results ($ft1, $ft2), FALSE for only returning correlation
 ##' @examples 
 ##' timeseries1 <- zoo(rnorm(100), order.by=sort(runif(100,min=1,max=1000)))
 ##' timeseries2 <- zoo(rnorm(100), order.by=sort(runif(100,min=1,max=1000)))
-##' CorIrregTimser(timeseries1, timeseries2, FALSE, "InterpolationMethod", "gauss", 1/200, NA, 10, "linear", NA)
+##' CorIrregTimser(timser1=timeseries1, timser2=timeseries2, detr=FALSE, method="InterpolationMethod", appliedFilter="gauss", fc=1/200, tn=NA, dt=10, int.method="linear", k=NA, filt.output=TRUE)
 ##' @author
 ##' @export
 
 
 
-CorIrregTimser <- function(timser1, timser2, detr, method=c("InterpolationMethod","DirectFiltering","IntegrandInterpolationMethod"), appliedFilter=c("gauss", "runmean", "lowpass"), fc, tn=seq(from=10,to=max(c(index(timser1),index(timser2))),by=10), dt, int.method=c("linear","nearest"), k=5)
+CorIrregTimser <- function(timser1, timser2, detr, method=c("InterpolationMethod","DirectFiltering","IntegrandInterpolationMethod"), appliedFilter=c("gauss", "runmean", "lowpass"), fc, tn=seq(from=10,to=max(c(index(timser1),index(timser2))),by=10), dt, int.method=c("linear","nearest"), k=5, filt.output)
 {
 	n <- max(c(max(index(timser1)), max(index(timser2))))
 	#
 	if(method=="InterpolationMethod"){
-		res <- cor.test(InterpolationMethod(detrTimser(timser1, detr), fc, dt, n, int.method, appliedFilter, k), InterpolationMethod(detrTimser(timser2, detr), fc, dt, n, int.method, appliedFilter, k), method="pearson", alternative="two.sided", na.action=TRUE)$estimate
+		filtTimser1 <- InterpolationMethod(detrTimser(timser1, detr), fc, dt, n, int.method, appliedFilter, k)
+		filtTimser2 <- InterpolationMethod(detrTimser(timser2, detr), fc, dt, n, int.method, appliedFilter, k)
+		res <- cor.test(filtTimser1, filtTimser2, method="pearson", alternative="two.sided", na.action=TRUE)$estimate
 	}
 	if(method=="DirectFiltering"){
-		res <- cor.test(DirectFiltering(detrTimser(timser1, detr), fc, tn, appliedFilter, k), DirectFiltering(detrTimser(timser2, detr), fc, tn, appliedFilter, k), method="pearson", alternative="two.sided", na.action=TRUE)$estimate
+		filtTimser1 <- DirectFiltering(detrTimser(timser1, detr), fc, tn, appliedFilter, k)
+		filtTimser2 <- DirectFiltering(detrTimser(timser2, detr), fc, tn, appliedFilter, k)
+		res <- cor.test(filtTimser1, filtTimser2, method="pearson", alternative="two.sided", na.action=TRUE)$estimate
 	}
 	if(method=="IntegrandInterpolationMethod"){
-		res <- cor.test(IntegrandInterpolationMethod(detrTimser(timser1, detr), fc, tn, appliedFilter, k), IntegrandInterpolationMethod(detrTimser(timser2, detr), fc, tn, appliedFilter, k), method="pearson", alternative="two.sided", na.action=TRUE)$estimate
+		filtTimser1 <- IntegrandInterpolationMethod(detrTimser(timser1, detr), fc, tn, appliedFilter, k)
+		filtTimser2 <- IntegrandInterpolationMethod(detrTimser(timser2, detr), fc, tn, appliedFilter, k)
+		res <- cor.test(filtTimser1, filtTimser2, method="pearson", alternative="two.sided", na.action=TRUE)$estimate
 	}
 	#
-	return(res)
+	if(filt.output==TRUE){return(list(cor = res, ft1 = filtTimser1, ft2 = filtTimser2))}
+	if(filt.output==FALSE){return(res)}
 }

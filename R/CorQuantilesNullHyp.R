@@ -20,7 +20,7 @@
 ##' timeseries1 <- zoo(rnorm(100), order.by=sort(runif(100,min=1,max=1000)))
 ##' timeseries2 <- zoo(rnorm(100), order.by=sort(runif(100,min=1,max=1000)))
 ##' slopes <- estimateTimserSlopes(timeseries1,timeseries2,1)
-##' CorQuantilesNullHyp(timeseries1, timeseries2, slopes$s1, slopes$s2, FALSE, 1000, c(0.05,0.95), "InterpolationMethod", "gauss", 1/200, NA, 10, "linear", NA)
+##' CorQuantilesNullHyp(timser1=timeseries1, timser2=timeseries2, beta.noise1=slopes$s1, beta.noise2=slopes$s2, detr=FALSE, rep=1000, quant=c(0.05,0.95), method="InterpolationMethod", appliedFilter="gauss", fc=1/200, tn=NA, dt=10, int.method="linear", k=NA)
 ##' @author
 ##' @export
 
@@ -36,9 +36,9 @@ CorQuantilesNullHyp <- function(timser1, timser2, beta.noise1, beta.noise2, detr
 	tmpCorNullHypPair <- numeric(length=rep)
 	
 	for(p in 1:length(fc)){
-		print(paste("p=",p,sep=""))
+		#print(paste("p=",p,sep=""))
 		for(i in 1:rep){
-			print(i)
+			#print(i)
 			tmp <- GenNullHypPair(n, beta.noise1, beta.noise2, time1, time2, detr)
 			#
 			if(method=="InterpolationMethod"){
