@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: c(person("Maria", "Reschke", email = "mreschke@awi.de", role = c("aut", "cre")), person("Thomas", "Laepple", email = "tlaepple@awi.de", role = c("aut")))
 Description: contains methods for processing irregularly sampled time series to enable the estimation of time scale dependent correlations using standard routines
 Depends: zoo
-License: What license is it under?
+License: GPLv3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
