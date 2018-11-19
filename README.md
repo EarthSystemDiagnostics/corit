@@ -9,7 +9,7 @@ Please contact Maria Reschke (mreschke@awi.de) at the Alfred-Wegener-Institute, 
 if (!require("devtools")) {   
   install.packages("devtools")   
 }   
-devtools::install_github("mareschke/corit")
+devtools::install_github("EarthSystemDiagnostics/corit")
 ``` 
 After installation load the package:   
 ```
